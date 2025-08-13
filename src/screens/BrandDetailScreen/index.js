@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Linking,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { getBrandById } from '../../services/api';
-import { COLORS } from '../../constants/colors';
-import { styles } from './styles';
-import { goBack } from '../../navigation/RootNavigation';
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { getBrandById } from "../../services/api";
+import { COLORS } from "../../constants/colors";
+import { styles } from "./styles";
+import { goBack } from "../../navigation/RootNavigation";
+import { CountInt, isIOS } from "../../constants/utils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Brand {
   id: number;
@@ -27,6 +29,7 @@ interface Brand {
 const BrandDetailScreen = ({ route }) => {
   const [brand, setBrand] = useState(null);
   const [loading, setLoading] = useState(true);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const fetchBrand = async () => {
@@ -47,7 +50,8 @@ const BrandDetailScreen = ({ route }) => {
     return (
       <LinearGradient
         colors={[COLORS.primary, COLORS.secondary]}
-        style={styles.loaderContainer}>
+        style={styles.loaderContainer}
+      >
         <Text style={styles.loadingText}>Loading brand details...</Text>
       </LinearGradient>
     );
@@ -57,7 +61,8 @@ const BrandDetailScreen = ({ route }) => {
     return (
       <LinearGradient
         colors={[COLORS.primary, COLORS.secondary]}
-        style={styles.loaderContainer}>
+        style={styles.loaderContainer}
+      >
         <Text style={styles.loadingText}>Brand not found</Text>
       </LinearGradient>
     );
@@ -70,8 +75,14 @@ const BrandDetailScreen = ({ route }) => {
   return (
     <LinearGradient
       colors={[COLORS.secondary, COLORS.primary]}
-      style={styles.container}>
-      <SafeAreaView style={styles.container}>
+      style={styles.container}
+    >
+      <SafeAreaView
+        style={[
+          styles.container,
+          { paddingTop: isIOS ? CountInt.Count0 : insets.top },
+        ]}
+      >
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
@@ -107,7 +118,8 @@ const BrandDetailScreen = ({ route }) => {
                 <Text style={styles.detailLabel}>Website: </Text>
                 <Text
                   style={[styles.detailValue, styles.website]}
-                  onPress={() => openLink(brand.website)}>
+                  onPress={() => openLink(brand.website)}
+                >
                   {brand.website}
                 </Text>
               </View>
