@@ -20,11 +20,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.faizul_hasan.snack29f7de75b2f849518275134864ea267d"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Expo Assignment App"
+    "description": "Expo Assignment App",
+    "extra": {
+      "eas": {
+        "projectId": "d7e3595f-8f35-4f6b-96ae-4763ca977f7b"
+      }
+    }
   }
 }
